@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #f0f0f0;
+  background-size: cover;
+}
+
+#desc {
+  position : absolute;
+  top: 5px;
+  left: 5px;
+}
