@@ -19,6 +19,10 @@
 	right:40px;
 }
 
+.black-ball:hover{
+  background-color:#2A2A2A;
+}
+
 .white-ball{
   background-color: white;
   color: black;
@@ -26,27 +30,35 @@
 	right:40px;
 }
 
+.white-ball:hover{
+  background-color: #F5F5F5;
+}
+
 .non-quantum{
-	background-color:#0C9;
+	background-color:#003399;
 }
 
 .non-quantum:hover {
-  background-color: green;
+  background-color: #001A4D;
 }
 
 .quantum{
-	background-color:#009;
+	background-color:#EE220C;
 }
 
 .quantum:hover {
-  background-color: blue;
+  background-color: #A51808;
 }
 
 .start{
 	top:40px;
 	right:40px;
-  background-color: aquamarine;
+  background-color: #7cfc00;
   color: black;
+}
+
+.start:hover{
+  background-color: #6fe300;
 }
 
 .CNOT{
