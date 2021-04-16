@@ -70,7 +70,7 @@ function newBall(x, y, radius, layer, stage, color) {
   layer.add(circle);
 
   // do something else on right click
-  circle.on('click', (e) => {
+  circle.on('contextmenu', (e) => {
     circle.destroy();
     layer.draw();
   });
@@ -80,7 +80,7 @@ function newBall(x, y, radius, layer, stage, color) {
 /*####################### Gate Definition ####################################*/
 /*############################################################################*/
 
-function newGate(x, y, width, height, layer, stage, innerText) {
+function newGate(x, y, width, height, layer, stage, filepath) {
 
   var shadowRectangle = new Konva.Rect({
     x: x,
@@ -97,57 +97,55 @@ function newGate(x, y, width, height, layer, stage, innerText) {
   shadowRectangle.hide();
   layer.add(shadowRectangle);
 
-  let rectangle = new Konva.Rect({
-    x: x,
-    y: y,
-    x_prev: x,
-    y_prev: y,
-    shapeType: 'rectangle',
-    width: blockSnapSize * width,
-    height: blockSnapSize * height,
-    fill: '#fff',
-    stroke: '#ddd',
-    strokeWidth: 1,
-    shadowColor: 'black',
-    shadowBlur: 2,
-    shadowOffset: {x : 1, y : 1},
-    shadowOpacity: 0.4,
-    draggable: true
-  });
-
-  rectangle.on('dragstart', (e) => {
-    shadowRectangle.show();
-    shadowRectangle.moveToTop();
-    rectangle.moveToTop();
-    rectangle.position({
-      x_prev: rectangle.x,
-      y_prev: rectangle.y
+  Konva.Image.fromURL(filepath, function (rectangle) {
+    rectangle.setAttrs({
+      x: x,
+      y: y,
+      x_prev: x,
+      y_prev: y,
+      width: blockSnapSize * width,
+      height: blockSnapSize * height,
+      shadowColor: 'black',
+      shadowBlur: 2,
+      shadowOffset: {x : 1, y : 1},
+      shadowOpacity: 0.4,
+      draggable: true
     });
-  });
 
-  rectangle.on('dragend', (e) => {
-    rectangle.position({
-      x: Math.round(rectangle.x() / blockSnapSize) * blockSnapSize,
-      y: Math.round(rectangle.y() / blockSnapSize) * blockSnapSize
+    rectangle.on('dragstart', (e) => {
+      shadowRectangle.show();
+      shadowRectangle.moveToTop();
+      rectangle.moveToTop();
+      rectangle.position({
+        x_prev: rectangle.x,
+        y_prev: rectangle.y
+      });
     });
-    stage.batchDraw();
-    shadowRectangle.hide();
-  });
 
-  rectangle.on('dragmove', (e) => {
-    shadowRectangle.position({
-      x: Math.round(rectangle.x() / blockSnapSize) * blockSnapSize,
-      y: Math.round(rectangle.y() / blockSnapSize) * blockSnapSize
+    rectangle.on('dragend', (e) => {
+      rectangle.position({
+        x: Math.round(rectangle.x() / blockSnapSize) * blockSnapSize,
+        y: Math.round(rectangle.y() / blockSnapSize) * blockSnapSize
+      });
+      stage.batchDraw();
+      shadowRectangle.hide();
     });
-    stage.batchDraw();
-  });
 
-  layer.add(rectangle);
+    rectangle.on('dragmove', (e) => {
+      shadowRectangle.position({
+        x: Math.round(rectangle.x() / blockSnapSize) * blockSnapSize,
+        y: Math.round(rectangle.y() / blockSnapSize) * blockSnapSize
+      });
+      stage.batchDraw();
+    });
 
-  // do something else on right click
-  rectangle.on('click', (e) => {
-    rectangle.destroy();
-    layer.draw();
+    layer.add(rectangle);
+    layer.batchDraw();
+    // do something else on right click
+    rectangle.on('contextmenu', (e) => {
+      rectangle.destroy();
+      layer.draw();
+    });
   });
 }
 

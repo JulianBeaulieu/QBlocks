@@ -42,6 +42,13 @@
   background-color: blue;
 }
 
+.start{
+	top:40px;
+	right:40px;
+  background-color: aquamarine;
+  color: black;
+}
+
 .CNOT{
 	bottom:40px;
 	right:40px;
