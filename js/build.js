@@ -68,6 +68,12 @@ function newBall(x, y, radius, layer, stage, color) {
   });
 
   layer.add(circle);
+
+  // do something else on right click
+  circle.on('click', (e) => {
+    circle.destroy();
+    layer.draw();
+  });
 }
 
 /*############################################################################*/
@@ -137,6 +143,12 @@ function newGate(x, y, width, height, layer, stage, innerText) {
   });
 
   layer.add(rectangle);
+
+  // do something else on right click
+  rectangle.on('click', (e) => {
+    rectangle.destroy();
+    layer.draw();
+  });
 }
 
 /*############################################################################*/
@@ -172,6 +184,11 @@ for (var j = 0; j < height / padding; j++) {
 
 var layer = new Konva.Layer();
 stage.add(gridLayer);
+
+// do not show context menu on right click
+stage.on('contentContextmenu', (e) => {
+  e.evt.preventDefault();
+});
 
 /*############################################################################*/
 /*####################### Colision Detection #################################*/
