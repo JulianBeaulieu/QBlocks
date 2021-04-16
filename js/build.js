@@ -232,22 +232,22 @@ function calcNewY(r1, r2){
 
   if ((y1 + h1/2) > (y2 + h2/2) > y1){
     return y1 - h2;
-  } else if ((y1 + h1) > (y2 + h2/2) >= (y1 + h1/2)){
-    return y1 + h1;
+  } else {
+    return (y1 + h1);
   }
 }
 
 function calcNewX(r1, r2){
   x1 = r1.attrs.x
-  w1 = (r1.attrs.shapeType === 'circle') ? r1.attrs.radius +1: r1.attrs.width
+  w1 = (r1.attrs.shapeType === 'circle') ? r1.attrs.radius +1: r1.attrs.width;
 
   x2 = r2.attrs.x
-  w2 = (r2.attrs.shapeType === 'circle') ? r2.attrs.radius +1: r2.attrs.width
+  w2 = (r2.attrs.shapeType === 'circle') ? r2.attrs.radius +1: r2.attrs.width;
 
   if ((x1 + w1/2) > (x2 + w2/2) > x1){
-    return x1 - w2;
-  } else if ((x1 + w1) > (x2 + w2/2) >= (x1 + w1/2)){
-    return x1 + w1;
+    return (x1 - w2);
+  } else {
+    return (x1 + w1);
   }
 }
 
@@ -262,6 +262,8 @@ layer.on('dragmove', function (e) {
     else if (haveIntersection(shape, target)) {
       newX = calcNewX(shape, target)
       newY = calcNewY(shape, target)
+      console.log("X: ", newX);
+      console.log("Y: ", newY);
       target.position({
         x: newX,
         y: newY
