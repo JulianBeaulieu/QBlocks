@@ -4,6 +4,7 @@
   <title>Quantum Game with Photons</title>
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/button.css">
 
   <script src="https://unpkg.com/konva@7.2.5/konva.min.js"></script>
 
@@ -14,5 +15,21 @@
 <body>
   <div id="container"></div>
   <script src="js/build.js"></script>
+
+  <a href="#" class="button CNOT non-quantum" onclick = "createCNOT_Gate()">
+    <p class="fa fa-plus my-float">CNOT</p>
+  </a>
+  <a href="#" class="button SWAP non-quantum" onclick = "createSWAP_Gate()">
+      <p class="fa fa-plus my-float">SWAP</p>
+  </a>
+  <a href="#" class="button NOT non-quantum" onclick = "createNOT_Gate()">
+    <p class="fa fa-plus my-float">NOT</p>
+  </a>
+  <a href="#" class="button PETE quantum" onclick = "createPETE_Gate()">
+    <p class="fa fa-plus my-float">PETE</p>
+  </a>
+
+</div>
+
 </body>
 </html>
