@@ -3,37 +3,34 @@ var height = window.innerHeight;
 var shadowOffset = 20;
 var tween = null;
 var blockSnapSize = 30;
-var PETE_Gate = []
-var CNOT_Gate = []
-var NOT_Gate = []
-var SWAP_Gate = []
 
 /*############################################################################*/
-/*####################### Squares Definition #################################*/
+/*####################### Ball Definition ####################################*/
 /*############################################################################*/
-var shadowRectangle = new Konva.Rect({
-  x: 0,
-  y: 0,
-  shapeType: 'shadow',
-  width: blockSnapSize * 6,
-  height: blockSnapSize * 3,
-  fill: '#FF7B17',
-  opacity: 0.6,
-  stroke: '#CF6412',
-  strokeWidth: 3,
-  dash: [20, 2]
-});
 
-function newRectangle(x, y, layer, stage, group) {
-  let rectangle = new Konva.Rect({
+function newBall(x, y, radius, layer, stage, color) {
+  var shadowCircle = new Konva.Circle({
+    x: x,
+    y: y,
+    shapeType: 'shadow',
+    radius: blockSnapSize * radius,
+    fill: '#FF7B17',
+    opacity: 0.6,
+    stroke: '#CF6412',
+    strokeWidth: 3,
+    dash: [20, 2]
+  });
+  shadowCircle.hide();
+  layer.add(shadowCircle);
+
+  let circle = new Konva.Circle({
     x: x,
     y: y,
     x_prev: x,
     y_prev: y,
-    shapeType: 'rectangle',
-    width: blockSnapSize * 6,
-    height: blockSnapSize * 3,
-    fill: '#fff',
+    shapeType: 'circle',
+    radius: blockSnapSize * radius,
+    fill: color,
     stroke: '#ddd',
     strokeWidth: 1,
     shadowColor: 'black',
@@ -43,7 +40,74 @@ function newRectangle(x, y, layer, stage, group) {
     draggable: true
   });
 
-  console.log(rectangle);
+  circle.on('dragstart', (e) => {
+    shadowCircle.show();
+    shadowCircle.moveToTop();
+    circle.moveToTop();
+    circle.position({
+      x_prev: circle.x,
+      y_prev: circle.y
+    });
+  });
+
+  circle.on('dragend', (e) => {
+    circle.position({
+      x: Math.round(circle.x() / blockSnapSize) * blockSnapSize,
+      y: Math.round(circle.y() / blockSnapSize) * blockSnapSize
+    });
+    stage.batchDraw();
+    shadowCircle.hide();
+  });
+
+  circle.on('dragmove', (e) => {
+    shadowCircle.position({
+      x: Math.round(circle.x() / blockSnapSize) * blockSnapSize,
+      y: Math.round(circle.y() / blockSnapSize) * blockSnapSize
+    });
+    stage.batchDraw();
+  });
+
+  layer.add(circle);
+}
+
+/*############################################################################*/
+/*####################### Gate Definition ####################################*/
+/*############################################################################*/
+
+function newGate(x, y, width, height, layer, stage, innerText) {
+
+  var shadowRectangle = new Konva.Rect({
+    x: x,
+    y: y,
+    shapeType: 'shadow',
+    width: blockSnapSize * width,
+    height: blockSnapSize * height,
+    fill: '#FF7B17',
+    opacity: 0.6,
+    stroke: '#CF6412',
+    strokeWidth: 3,
+    dash: [20, 2]
+  });
+  shadowRectangle.hide();
+  layer.add(shadowRectangle);
+
+  let rectangle = new Konva.Rect({
+    x: x,
+    y: y,
+    x_prev: x,
+    y_prev: y,
+    shapeType: 'rectangle',
+    width: blockSnapSize * width,
+    height: blockSnapSize * height,
+    fill: '#fff',
+    stroke: '#ddd',
+    strokeWidth: 1,
+    shadowColor: 'black',
+    shadowBlur: 2,
+    shadowOffset: {x : 1, y : 1},
+    shadowOpacity: 0.4,
+    draggable: true
+  });
 
   rectangle.on('dragstart', (e) => {
     shadowRectangle.show();
@@ -78,6 +142,7 @@ function newRectangle(x, y, layer, stage, group) {
 /*############################################################################*/
 /*####################### Creates Grid #######################################*/
 /*############################################################################*/
+
 var stage = new Konva.Stage({
   container: 'container',
   width: width,
@@ -106,33 +171,10 @@ for (var j = 0; j < height / padding; j++) {
 }
 
 var layer = new Konva.Layer();
-shadowRectangle.hide();
-layer.add(shadowRectangle);
-
-function createPETE_Gate(){
-  newRectangle(blockSnapSize * 3, blockSnapSize * 3, layer, stage);
-  stage.add(layer);
-}
-
-function createSWAP_Gate(){
-  newRectangle(blockSnapSize * 3, blockSnapSize * 3, layer, stage);
-  stage.add(layer);
-}
-
-function createCNOT_Gate(){
-  newRectangle(blockSnapSize * 3, blockSnapSize * 3, layer, stage);
-  stage.add(layer);
-}
-
-function createNOT_Gate(){
-  newRectangle(blockSnapSize * 3, blockSnapSize * 3, layer, stage);
-  stage.add(layer);
-}
-
 stage.add(gridLayer);
 
 /*############################################################################*/
-/*####################### Colision Detection Grid ############################*/
+/*####################### Colision Detection #################################*/
 /*############################################################################*/
 
 function haveIntersection(r1, r2) {
@@ -141,38 +183,53 @@ function haveIntersection(r1, r2) {
     return false;
   }
 
-  return !(
-    r2.attrs.x > r1.attrs.x + r1.attrs.width ||
-    r2.attrs.x + r2.attrs.width < r1.attrs.x ||
-    r2.attrs.y > r1.attrs.y + r1.attrs.height ||
-    r2.attrs.y + r2.attrs.height < r1.attrs.y
-  );
+  y1 = r1.attrs.y
+  h1 = (r1.attrs.shapeType === 'circle') ? r1.attrs.radius +1: r1.attrs.height;
+  x1 = r1.attrs.x
+  w1 = (r1.attrs.shapeType === 'circle') ? r1.attrs.radius +1: r1.attrs.width
+
+  x2 = r2.attrs.x
+  w2 = (r2.attrs.shapeType === 'circle') ? r2.attrs.radius +1: r2.attrs.width
+  y2 = r2.attrs.y
+  h2 = (r2.attrs.shapeType === 'circle') ? r2.attrs.radius +1 : r2.attrs.height;
+
+
+  let colision = !(
+    x2 > x1 + w1 ||
+    x2 + w2 < x1 ||
+    y2 > y1 + h1 ||
+    y2 + h2 < y1
+  )
+
+  //console.log(colision);
+
+  return colision;
 }
 
 function calcNewY(r1, r2){
   y1 = r1.attrs.y
-  h1 = r1.attrs.height
+  h1 = (r1.attrs.shapeType === 'circle') ? r1.attrs.radius +1: r1.attrs.height;
 
   y2 = r2.attrs.y
-  h2 = r2.attrs.height
+  h2 = (r2.attrs.shapeType === 'circle') ? r2.attrs.radius +1 : r2.attrs.height;
 
-  if ((y1 + h1)/2 > (y2 + h2)/2){
+  if ((y1 + h1/2) > (y2 + h2/2) > y1){
     return y1 - h2;
-  } else {
+  } else if ((y1 + h1) > (y2 + h2/2) >= (y1 + h1/2)){
     return y1 + h1;
   }
 }
 
 function calcNewX(r1, r2){
   x1 = r1.attrs.x
-  w1 = r1.attrs.width
+  w1 = (r1.attrs.shapeType === 'circle') ? r1.attrs.radius +1: r1.attrs.width
 
   x2 = r2.attrs.x
-  w2 = r2.attrs.width
+  w2 = (r2.attrs.shapeType === 'circle') ? r2.attrs.radius +1: r2.attrs.width
 
-  if ((x1 + w1)/2 > (x2 + w2)/2){
+  if ((x1 + w1/2) > (x2 + w2/2) > x1){
     return x1 - w2;
-  } else {
+  } else if ((x1 + w1) > (x2 + w2/2) >= (x1 + w1/2)){
     return x1 + w1;
   }
 }

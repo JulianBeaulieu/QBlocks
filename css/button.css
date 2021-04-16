@@ -13,6 +13,19 @@
 	box-shadow: 2px 2px 3px #999;
 }
 
+.black-ball{
+  background-color:black;
+  bottom:390px;
+	right:40px;
+}
+
+.white-ball{
+  background-color: white;
+  color: black;
+  bottom:320px;
+	right:40px;
+}
+
 .non-quantum{
 	background-color:#0C9;
 }

@@ -14,8 +14,13 @@
 </head>
 <body>
   <div id="container"></div>
-  <script src="js/build.js"></script>
 
+  <a href="#" class="button black-ball" onclick = "createBLACK_BALL()">
+    <p class="fa fa-plus my-float">BALL</p>
+  </a>
+  <a href="#" class="button white-ball" onclick = "createWHITE_BALL()">
+    <p class="fa fa-plus my-float">BALL</p>
+  </a>
   <a href="#" class="button CNOT non-quantum" onclick = "createCNOT_Gate()">
     <p class="fa fa-plus my-float">CNOT</p>
   </a>
@@ -29,7 +34,8 @@
     <p class="fa fa-plus my-float">PETE</p>
   </a>
 
-</div>
-
+  <!-- Script Imports -->
+  <script src="js/build.js"></script>
+  <script src="js/buttons.js"></script>
 </body>
 </html>
