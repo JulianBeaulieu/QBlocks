@@ -21,10 +21,16 @@
 .canvas-width{
 }
 
-.child-3468154354 {
+.expand-child-past-parent {
   width: 90vw;
   position: relative;
   left: calc(-45vw + 45%);
+}
+
+.expand-child-marginally-past-parent {
+  width: 70vw;
+  position: relative;
+  left: calc(-30vw + 35%);
 }
 
 .row-bottom-margin { margin-bottom: 0px; }
