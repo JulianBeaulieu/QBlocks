@@ -1,20 +1,20 @@
 function createPETE_Gate(){
-  newGate(blockSnapSize * 3, blockSnapSize * 3, 2, 2, layer, stage, 'img/hadamard.png');
+  newGate(blockSnapSize * 3, blockSnapSize * 3, 2, 2, layer, stage, 'img/hadamard.png', 'hadamard');
   stage.add(layer);
 }
 
 function createSWAP_Gate(){
-  newGate(blockSnapSize * 3, blockSnapSize * 3, 4, 2, layer, stage, 'img/swap.png');
+  newGate(blockSnapSize * 3, blockSnapSize * 3, 4, 2, layer, stage, 'img/swap.png', 'swap');
   stage.add(layer);
 }
 
 function createCNOT_Gate(){
-  newGate(blockSnapSize * 3, blockSnapSize * 3, 4, 2, layer, stage, 'img/cnot.png');
+  newGate(blockSnapSize * 3, blockSnapSize * 3, 4, 2, layer, stage, 'img/cnot.png', 'cnot');
   stage.add(layer);
 }
 
 function createNOT_Gate(){
-  newGate(blockSnapSize * 3, blockSnapSize * 3, 2, 2, layer, stage, 'img/not.png');
+  newGate(blockSnapSize * 3, blockSnapSize * 3, 2, 2, layer, stage, 'img/not.png', 'not');
   stage.add(layer);
 }
 
@@ -30,4 +30,6 @@ function createWHITE_BALL(){
 
 function start(){
   console.log("Starting simulations");
+  getShapes();
+  simulate();
 }

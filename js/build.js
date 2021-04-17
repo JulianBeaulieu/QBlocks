@@ -1,5 +1,10 @@
-var width = window.innerWidth;
-var height = window.innerHeight;
+// var width = window.innerWidth;
+// var height = window.innerHeight;
+window.onresize = function(){ location.reload(); }
+var width = document.getElementById('canvas-div').clientWidth;
+var height = (window.innerHeight * 2/3);
+
+console.log("Height: " + height + " | Width: " + width);
 var shadowOffset = 20;
 var tween = null;
 var blockSnapSize = 30;
@@ -12,7 +17,8 @@ function newBall(x, y, radius, layer, stage, color) {
   var shadowCircle = new Konva.Circle({
     x: x,
     y: y,
-    shapeType: 'shadow',
+    shapeType: 'shadowCircle',
+    ballType: color+'Ball',
     radius: blockSnapSize * radius,
     fill: '#FF7B17',
     opacity: 0.6,
@@ -29,6 +35,7 @@ function newBall(x, y, radius, layer, stage, color) {
     x_prev: x,
     y_prev: y,
     shapeType: 'circle',
+    ballType: color+'Ball',
     radius: blockSnapSize * radius,
     fill: color,
     stroke: '#ddd',
@@ -80,12 +87,13 @@ function newBall(x, y, radius, layer, stage, color) {
 /*####################### Gate Definition ####################################*/
 /*############################################################################*/
 
-function newGate(x, y, width, height, layer, stage, filepath) {
+function newGate(x, y, width, height, layer, stage, filepath, gateType) {
 
   var shadowRectangle = new Konva.Rect({
     x: x,
     y: y,
-    shapeType: 'shadow',
+    shapeType: 'shadowRectangle',
+    gateType: gateType+'Gate',
     width: blockSnapSize * width,
     height: blockSnapSize * height,
     fill: '#FF7B17',
@@ -103,6 +111,8 @@ function newGate(x, y, width, height, layer, stage, filepath) {
       y: y,
       x_prev: x,
       y_prev: y,
+      shapeType: 'rectangle',
+      gateType: gateType+'Gate',
       width: blockSnapSize * width,
       height: blockSnapSize * height,
       shadowColor: 'black',
@@ -154,7 +164,7 @@ function newGate(x, y, width, height, layer, stage, filepath) {
 /*############################################################################*/
 
 var stage = new Konva.Stage({
-  container: 'container',
+  container: 'canvas',
   width: width,
   height: height
 });
@@ -194,7 +204,7 @@ stage.on('contentContextmenu', (e) => {
 
 function haveIntersection(r1, r2) {
 
-  if(r1.attrs.shapeType === 'shadow' || r2.attrs.shapeType === 'shadow' ){
+  if(r1.attrs.shapeType.includes('shadow') || r2.attrs.shapeType.includes('shadow') ){
     return false;
   }
 
@@ -270,3 +280,22 @@ layer.on('dragmove', function (e) {
     }
   });
 });
+
+/*############################################################################*/
+/*####################### Simulation Code ####################################*/
+/*############################################################################*/
+
+function getShapes() {
+  // select shapes by name
+  var gates = stage.find('Rect');
+  var balls = stage.find('Circle')
+
+  console.log("Gates:");
+  gates.each(function (gate) {
+    console.log(gate.attrs);
+  });
+  console.log("Balls:");
+  balls.each(function (ball) {
+    console.log(ball.attrs);
+  });
+};

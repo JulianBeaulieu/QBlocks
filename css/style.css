@@ -1,13 +1,31 @@
-body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #f0f0f0;
-  background-size: cover;
-}
-
 #desc {
   position : absolute;
   top: 5px;
   left: 5px;
 }
+
+.box{
+  height: 66vh;
+}
+
+.right-box{
+  text-decoration: underline;
+  text-align: center;
+  font-weight: bold;
+}
+
+.left-box{
+  font-size: 18px;
+}
+
+.canvas-width{
+}
+
+.child-3468154354 {
+  width: 90vw;
+  position: relative;
+  left: calc(-45vw + 45%);
+}
+
+.row-bottom-margin { margin-bottom: 0px; }
+.row-top-margin { margin-top: 60px; }

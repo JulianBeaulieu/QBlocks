@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QBlocks: A Quantum Gate Simulator</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/button.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+
+  <script src="https://unpkg.com/konva@7.2.5/konva.min.js"></script>
+
+
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-1 col-md-1 col-lg-1">
+
+      </div>
+      <div id="canvas-div" class="col-sm-10 col-md-10 col-lg-10">
+        <div id="canvas"></div>
+      </div>
+      <div class="col-sm-1 col-md-1 col-lg-1">
+        <a href="#" class="button start" onclick = "start()">
+          <p class="fa fa-plus my-float">Start</p>
+        </a>
+        <a href="#" class="button black-ball" onclick = "createBLACK_BALL()">
+          <p class="fa fa-plus my-float">BALL</p>
+        </a>
+        <a href="#" class="button white-ball" onclick = "createWHITE_BALL()">
+          <p class="fa fa-plus my-float">BALL</p>
+        </a>
+        <a href="#" class="button CNOT non-quantum" onclick = "createCNOT_Gate()">
+          <p class="fa fa-plus my-float">CNOT</p>
+        </a>
+        <a href="#" class="button SWAP non-quantum" onclick = "createSWAP_Gate()">
+            <p class="fa fa-plus my-float">SWAP</p>
+        </a>
+        <a href="#" class="button NOT non-quantum" onclick = "createNOT_Gate()">
+          <p class="fa fa-plus my-float">NOT</p>
+        </a>
+        <a href="#" class="button PETE quantum" onclick = "createPETE_Gate()">
+          <p class="fa fa-plus my-float">PETE</p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Script Imports -->
+  <script src="js/GatesAndParticles/Ball.js"></script>
+  <script src="js/GatesAndParticles/Not.js"></script>
+  <script src="js/GatesAndParticles/CNot.js"></script>
+  <script src="js/GatesAndParticles/Swap.js"></script>
+
+
+  <script src="js/build.js"></script>
+  <script src="js/simulate.js"></script>
+  <script src="js/buttons.js"></script>
+</body>
+</html>
