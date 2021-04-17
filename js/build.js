@@ -163,6 +163,8 @@ function newGate(x, y, width, height, layer, stage, filepath, gateType) {
 /*####################### Creates Grid #######################################*/
 /*############################################################################*/
 
+
+
 var stage = new Konva.Stage({
   container: 'canvas',
   width: width,
