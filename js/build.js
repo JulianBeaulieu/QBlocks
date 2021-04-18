@@ -13,12 +13,13 @@ var blockSnapSize = 30;
 /*####################### Ball Definition ####################################*/
 /*############################################################################*/
 
-function newBall(x, y, radius, layer, stage, color) {
+function newBall(x, y, radius, layer, stage, color, createdBy) {
   var shadowCircle = new Konva.Circle({
     x: x,
     y: y,
     shapeType: 'shadowCircle',
     ballType: color+'Ball',
+    id: createdBy,
     radius: blockSnapSize * radius,
     fill: '#FF7B17',
     opacity: 0.6,
@@ -36,6 +37,7 @@ function newBall(x, y, radius, layer, stage, color) {
     y_prev: y,
     shapeType: 'circle',
     ballType: color+'Ball',
+    id: createdBy,
     radius: blockSnapSize * radius,
     fill: color,
     stroke: '#ddd',
@@ -87,13 +89,14 @@ function newBall(x, y, radius, layer, stage, color) {
 /*####################### Gate Definition ####################################*/
 /*############################################################################*/
 
-function newGate(x, y, width, height, layer, stage, filepath, gateType) {
+function newGate(x, y, width, height, layer, stage, filepath, gateType, createdBy) {
 
   var shadowRectangle = new Konva.Rect({
     x: x,
     y: y,
     shapeType: 'shadowRectangle',
     gateType: gateType+'Gate',
+    id: createdBy,
     width: blockSnapSize * width,
     height: blockSnapSize * height,
     fill: '#FF7B17',
@@ -113,6 +116,7 @@ function newGate(x, y, width, height, layer, stage, filepath, gateType) {
       y_prev: y,
       shapeType: 'rectangle',
       gateType: gateType+'Gate',
+      id: createdBy,
       width: blockSnapSize * width,
       height: blockSnapSize * height,
       shadowColor: 'black',
@@ -155,6 +159,13 @@ function newGate(x, y, width, height, layer, stage, filepath, gateType) {
     rectangle.on('contextmenu', (e) => {
       rectangle.destroy();
       layer.draw();
+    });
+
+    // do something else on right click
+    rectangle.on('stop-button', (e) => {
+      // rectangle.destroy();
+      // layer.draw();
+      console.log("\n\nPENIS\n\n");
     });
   });
 }
@@ -299,5 +310,15 @@ function getShapes() {
   console.log("Balls:");
   balls.each(function (ball) {
     console.log(ball.attrs);
+  });
+};
+
+function clearShapes() {
+  // select shapes by name
+  var objects = stage.find('#simulation');
+  
+  objects.each(function (object) {
+      object.destroy();
+      layer.draw();
   });
 };

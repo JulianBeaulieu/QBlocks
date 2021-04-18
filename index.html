@@ -724,22 +724,24 @@
                                                                     <div class="well well-lg">
                                                                       <div class="box right-box">
 
+                                                                        <!-- Simulation Controls -->
                                                                         <div class="row row-bottom-margin">
                                                                           Simulation Controls
                                                                         </div>
                                                                         <div class="row">
                                                                           <div class="col-sm-6 col-md-6 col-lg-6">
-                                                                            <a href="#" class="button start" onclick = "start()">
+                                                                            <a href="#" class="button start" onclick = "start()" id="start-button">
                                                                               <p class="fa fa-plus my-float">Start</p>
                                                                             </a>
                                                                           </div>
-                                                                          <div class="col-sm-6 col-md-6 col-lg-6">
-                                                                            <a href="#" class="button start" onclick = "start()">
+                                                                          <div class="col-sm-6 col-md-6 col-lg-6" id="stop-button">
+                                                                            <a href="#" class="button start" onclick = "stop()">
                                                                               <p class="fa fa-plus my-float">Stop</p>
                                                                             </a>
                                                                           </div>
                                                                         </div>
 
+                                                                        <!-- Balls -->
                                                                         <div class="row row-bottom-margin row-top-margin">
                                                                           Balls
                                                                         </div>
@@ -756,6 +758,7 @@
                                                                           </div>
                                                                         </div>
 
+                                                                        <!-- Gates -->
                                                                         <div class="row row-bottom-margin row-top-margin">
                                                                           Gates
                                                                         </div>
@@ -767,6 +770,9 @@
                                                                             <a href="#" class="button SWAP non-quantum" onclick = "createSWAP_Gate()">
                                                                                 <p class="fa fa-plus my-float">SWAP</p>
                                                                             </a>
+                                                                            <a href="#" class="button SWAP non-quantum" onclick = "createCSWAP_Gate()">
+                                                                                <p class="fa fa-plus my-float">CSWAP</p>
+                                                                            </a>
                                                                           </div>
                                                                           <div class="col-sm-6 col-md-6 col-lg-6">
                                                                             <a href="#" class="button CNOT non-quantum" onclick = "createCNOT_Gate()">
@@ -777,17 +783,19 @@
                                                                             </a>
                                                                           </div>
                                                                         </div>
+
+                                                                        <!-- Mists -->
                                                                         <div class="row row-bottom-margin row-top-margin">
                                                                           Mists
                                                                         </div>
                                                                         <div class="row">
                                                                           <div class="col-sm-6 col-md-6 col-lg-6">
-                                                                            <a href="#" class="button black-ball" onclick = "createBLACK_BALL()">
+                                                                            <a href="#" class="button white-ball" onclick = "createWBMist()">
                                                                               <p class="fa fa-plus my-float">W, B</p>
                                                                             </a>
                                                                           </div>
                                                                           <div class="col-sm-6 col-md-6 col-lg-6">
-                                                                            <a href="#" class="button white-ball" onclick = "createWHITE_BALL()">
+                                                                            <a href="#" class="button white-ball" onclick = "createWNegBMist()">
                                                                               <p class="fa fa-plus my-float">W, -B</p>
                                                                             </a>
                                                                           </div>
