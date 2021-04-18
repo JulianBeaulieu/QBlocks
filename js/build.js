@@ -1,6 +1,6 @@
 // var width = window.innerWidth;
 // var height = window.innerHeight;
-window.onresize = function(){ location.reload(); }
+// window.onresize = function(){ location.reload(); }
 var width = document.getElementById('canvas-div').clientWidth;
 var height = (window.innerHeight * 2/3);
 
@@ -316,7 +316,7 @@ function getShapes() {
 function clearShapes() {
   // select shapes by name
   var objects = stage.find('#simulation');
-  
+
   objects.each(function (object) {
       object.destroy();
       layer.draw();
