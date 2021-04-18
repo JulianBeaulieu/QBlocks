@@ -1,5 +1,3 @@
-let startX =
-
 function createPETE_Gate(){
   newGate(blockSnapSize * 3, blockSnapSize * 3, 2, 2, layer, stage, 'img/hadamard.png', 'hadamard', 'user');
   stage.add(layer);
