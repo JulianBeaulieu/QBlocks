@@ -1,3 +1,5 @@
+let startX =
+
 function createPETE_Gate(){
   newGate(blockSnapSize * 3, blockSnapSize * 3, 2, 2, layer, stage, 'img/hadamard.png', 'hadamard', 'user');
   stage.add(layer);
@@ -24,12 +26,12 @@ function createNOT_Gate(){
 }
 
 function createBLACK_BALL(){
-  newBall(blockSnapSize * 3, blockSnapSize * 3, 0.5, layer, stage, 'black', 'user');
+  newBall(blockSnapSize * 2, blockSnapSize * 2, 0.5, layer, stage, 'black', 'user');
   stage.add(layer);
 }
 
 function createWHITE_BALL(){
-  newBall(blockSnapSize * 3, blockSnapSize * 3, 0.5, layer, stage, 'white', 'user');
+  newBall(blockSnapSize * 2, blockSnapSize * 2, 0.5, layer, stage, 'white', 'user');
   stage.add(layer);
 }
 
