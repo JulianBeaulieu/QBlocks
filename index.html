@@ -726,16 +726,20 @@
                                                                             <a href="#" class="button SWAP non-quantum" onclick = "createSWAP_Gate()">
                                                                                 <p class="fa fa-plus my-float">SWAP</p>
                                                                             </a>
-                                                                            <a href="#" class="button SWAP non-quantum" onclick = "createCSWAP_Gate()">
-                                                                                <p class="fa fa-plus my-float">CSWAP</p>
+                                                                            <a href="#" class="button PETE quantum" onclick = "createPETE_Gate()">
+                                                                              <p class="fa fa-plus my-float">PETE</p>
                                                                             </a>
+
+
                                                                           </div>
                                                                           <div class="col-sm-6 col-md-6 col-lg-6">
                                                                             <a href="#" class="button CNOT non-quantum" onclick = "createCNOT_Gate()">
                                                                               <p class="fa fa-plus my-float">CNOT</p>
                                                                             </a>
-                                                                            <a href="#" class="button PETE quantum" onclick = "createPETE_Gate()">
-                                                                              <p class="fa fa-plus my-float">PETE</p>
+
+
+                                                                            <a href="#" class="button SWAP non-quantum" onclick = "createCSWAP_Gate()">
+                                                                                <p class="fa fa-plus my-float">CSWAP</p>
                                                                             </a>
                                                                           </div>
                                                                         </div>
@@ -772,6 +776,12 @@
                                                                               <p class="fa fa-plus my-float">Stop</p>
                                                                             </a>
                                                                           </div>
+                                                                          <div class="col-sm-12 col-md-12 col-lg-12" id="clear-button">
+                                                                            <a href="#" class="button-clearAll start" onclick = "clearAll()">
+                                                                              <p class="fa fa-plus my-float">Clear All</p>
+                                                                            </a>
+                                                                          </div>
+
                                                                         </div>
 
                                                                       </div>
@@ -794,11 +804,15 @@
                                                                         </div>
                                                                         <div class="left-box">
                                                                           <ul>
-                                                                            <li>The default position of any object is on the top left. So it's IMPORTANT you move that object onto the canvas prior to creating the next object. You can do this by drag/drop the object.</li>
-                                                                            <li>To remove an object from canvas, right click.</li>
-                                                                            <li>Once objects on canvas you can stack them accordingly.</li>
-                                                                            <li>To start the simulation, press the play button on the right side. (TBD) </li>
-                                                                            <li>To undo the simulation, press the stop button. (TBD)</li>
+                                                                            <li>Clicking any object causes it to appear in default top left position.<br></li>
+                                                                            <li>So it's IMPORTANT you move that object onto the canvas prior to creating the next object. You can do this by drag/drop.<br></li>
+                                                                            <li>If you don’t move the clicked object the next one you click will appear over it, and you can drag/drop it to make one beneath it appear.<br></li>
+                                                                            <li>To remove an object from canvas, right click.<br></li>
+                                                                            <li>Once objects on canvas you can stack them accordingly, being careful to not overlap them as you finalize the position of the incoming one.<br></li>
+                                                                            <li>To start the simulation, press the 'Play' button on the right side. (TBD)<br></li>
+                                                                            <li>To undo the simulation, press the 'Stop' button. (TBD)<br></li>
+                                                                            <li>To remove ALL objects, press the 'Clear All' button. (TBD)<br></li>
+
                                                                           </ul>
                                                                         </div>
                                                                       </div>

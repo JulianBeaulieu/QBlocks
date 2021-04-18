@@ -52,5 +52,10 @@ function start(){
 
 function stop(){
   console.log("Clearing simulation objects");
-  clearShapes()
+  clearShapes();
+}
+
+function clearAll(){
+  console.log("Clearing all objects");
+  clearAllObjects();
 }

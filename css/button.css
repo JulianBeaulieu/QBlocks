@@ -10,6 +10,18 @@
 	box-shadow: 2px 2px 3px #999;
 }
 
+.button-clearAll{
+	display: block;
+	width:140px;
+	height:60px;
+  line-height: 60px;
+	color:#FFF;
+	border-radius:5%;
+  font-size: 15px;
+	text-align: center;
+	box-shadow: 2px 2px 3px #999;
+}
+
 .black-ball{
   background-color:black;
 }

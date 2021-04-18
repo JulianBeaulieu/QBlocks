@@ -300,7 +300,7 @@ layer.on('dragmove', function (e) {
 
 function getShapes() {
   // select shapes by name
-  var gates = stage.find('Rect');
+  var gates = stage.find('Image');
   var balls = stage.find('Circle')
 
   console.log("Gates:");
@@ -322,3 +322,19 @@ function clearShapes() {
       layer.draw();
   });
 };
+
+function clearAllObjects(){
+  // select shapes by name
+
+  let shapes = ["Image", "Rect", "Circle"]
+
+  shapes.forEach((shape, i) => {
+    var shapeInStage = stage.find(shape);
+    shapeInStage.each(function (object) {
+      console.log(shape);
+      object.destroy();
+    });
+  });
+
+  layer.draw();
+}
