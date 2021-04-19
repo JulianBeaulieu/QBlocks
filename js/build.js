@@ -364,10 +364,11 @@ function getShapes() {
 
   matchedObjects = shapesToObject(matchedObjects);
   // console.log("shapesToObject");
-  // console.log("Length of matchedObjects array: " + matchedObjects.length);
-  // matchedObjects.forEach((shape, i) => {
-  //   console.log(shape);
-  // });
+
+  console.log("Length of matchedObjects array: " + matchedObjects.length);
+  matchedObjects.forEach((shape, i) => {
+    console.log(2+" " + i + " | " + shape);
+  });
 
   let simulationOutcome = simulate(matchedObjects);
   // console.log("simulate");
