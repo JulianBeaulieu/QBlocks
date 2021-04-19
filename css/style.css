@@ -15,7 +15,7 @@
 }
 
 .left-box{
-  font-size: 18px;
+  font-size: 68%;
 }
 
 .canvas-width{
@@ -24,13 +24,13 @@
 .expand-child-past-parent {
   width: 90vw;
   position: relative;
-  left: calc(-45vw + 45%);
+  left: calc(-40vw + 45%);
 }
 
 .expand-child-marginally-past-parent {
   width: 70vw;
   position: relative;
-  left: calc(-30vw + 35%);
+  left: calc(-25vw + 35%);
 }
 
 .row-bottom-margin { margin-bottom: 0px; }
