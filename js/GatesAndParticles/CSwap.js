@@ -9,9 +9,9 @@ function CSwap(x, y, width, height){
     let object2 = objectList[1];
     let object3 = objectList[2];
 
-    console.log("object1: " + object1.color);
-    console.log("object2: " + object2.color);
-    console.log("object3: " + object3.color);
+    console.log("object1: " + ((object1.color === 1) ? 'White' : 'Black'));
+    console.log("object2: " + ((object2.color === 1) ? 'White' : 'Black'));
+    console.log("object3: " + ((object3.color === 1) ? 'White' : 'Black'));
 
     if(object1.constructor.name === 'Ball'){
       //Not first object if second object is white

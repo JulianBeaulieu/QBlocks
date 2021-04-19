@@ -184,7 +184,6 @@ var stage = new Konva.Stage({
 
 var gridLayer = new Konva.Layer();
 var padding = blockSnapSize;
-console.log(width, padding, width / padding);
 
 for (var i = 0; i < width / padding; i++) {
   gridLayer.add(new Konva.Line({
@@ -367,11 +366,16 @@ function getShapes() {
 
   console.log("Length of matchedObjects array: " + matchedObjects.length);
   matchedObjects.forEach((shape, i) => {
-    console.log(2+" " + i + " | " + shape);
+    console.log(i + " | " + shape);
   });
 
   let simulationOutcome = simulate(matchedObjects);
   // console.log("simulate");
+
+  console.log("Length of matchedObjects array: " + simulationOutcome.length);
+  simulationOutcome.forEach((shape, i) => {
+    console.log(i + " | " + shape);
+  });
 
   clearShapesCreatedDuringSimulation();
 

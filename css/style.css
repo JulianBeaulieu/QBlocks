@@ -5,7 +5,11 @@
 }
 
 .box{
-  height: 66vh;
+  height: 790px;
+}
+
+.min-well{
+  min-width: 50vw;
 }
 
 .right-box{
