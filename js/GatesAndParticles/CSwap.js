@@ -20,7 +20,7 @@ function CSwap(x, y, width, height){
       object3.y += 2 * this.height;
 
       if(object1.color === 1){
-        tmp = object2.x ;
+        tmp = object2.x;
         object2.x = object3.x;
         object3.x = tmp;
 
