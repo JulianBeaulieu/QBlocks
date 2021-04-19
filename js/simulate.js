@@ -1,21 +1,17 @@
-function simulate(){
-  let bball = new Ball(0, '+');
-  let wball = new Ball(1, '+');
+function simulate(matchedObjects){
+  var newObjects = [];
 
-  let not_gate = new Not();
-  let cnot_gate = new CNot();
-  let swap_gate = new Swap();
+  for (var i = 0; i < matchedObjects.length; i++) {
+    let particles = matchedObjects[i];
+    let gate = particles[0];
+    particles.splice(0, 1);
 
+    let elementList = gate.run(particles);
 
-  console.log("\nSWAP:");
-  var swapBalls = swap_gate.swap(bball, wball);
-  console.log("Swapped Balls: (b,w) -> (w,b) (" + swapBalls[0].toString() + ", " + swapBalls[1].toString() + ")");
-  swapBalls = swap_gate.swap(wball, bball);
-  console.log("Swapped Balls: (w,b) -> (b,w) (" + swapBalls[0].toString() + ", " + swapBalls[1].toString() + ")");
+    elementList.forEach((item, i) => {
+      newObjects.push(item);
+    });
+  }
 
-  console.log("\nCNOT:");
-  let cnotBallsFalse = cnot_gate.cnot(wball, bball);
-  console.log("Cnot Balls False: (w,b) -> (w,b) (" + cnotBallsFalse[0].toString() + ", " + cnotBallsFalse[1].toString() + ")");
-  let cnotBallsTrue = cnot_gate.cnot(bball, wball);
-  console.log("Cnot Balls True: (b,w) -> (w,w) (" + cnotBallsTrue[0].toString() + ", " + cnotBallsTrue[1].toString() + ")");
+  return newObjects;
 }

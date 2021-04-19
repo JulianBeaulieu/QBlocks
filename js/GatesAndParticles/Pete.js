@@ -1,14 +1,14 @@
-function Not(x, y, width, height){
+function Pete(x, y, width, height){
   this.x = x;
   this.y = y;
   this.width = width;
   this.height = height;
 
-  this.run = function not(objectList){
+  this.run = function pete(objectList){
     let object = objectList[0];
 
     if(object.constructor.name === 'Ball'){
-      object.color = Math.abs(object.color - 1);
+      object.color = Math.floor(Math.random() * 2); //creates either a random 1 or 0
 
       object.y += 2 * this.height;
       return [object];
@@ -16,13 +16,13 @@ function Not(x, y, width, height){
       // TODO: handle mist
       return [object]
     } else {
-      console.log("Else in Not, something went wrong");
+      console.log("Else in Pete, something went wrong");
       console.log(object.toString());
       return [object];
     }
   };
 
   this.toString = function toString(){
-    return 'Not-Gate';
+    return 'Pete-Gate';
   };
 }

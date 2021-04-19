@@ -547,23 +547,6 @@
     </noscript>
 
 
-
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/button.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-
-
-    <script src="https://unpkg.com/konva@7.2.5/konva.min.js"></script>
-
-
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-
 </head>
 
 <body class="page-template-default page page-id-997 wpb-js-composer js-comp-ver-6.6.0 vc_responsive">
@@ -688,6 +671,35 @@
 <!-- ############################################################################################################ -->
 <!-- ############################################################################################################ -->
 <!-- ############################################################################################################ -->
+
+                                                            <script>
+                                                              function loadjscssfile(filename, filetype){
+                                                                if (filetype=="js"){ //if filename is a external JavaScript file
+                                                                    var fileref=document.createElement('script')
+                                                                    fileref.setAttribute("type","text/javascript")
+                                                                    fileref.setAttribute("src", filename)
+                                                                }
+                                                                else if (filetype=="css"){ //if filename is an external CSS file
+                                                                    var fileref=document.createElement("link")
+                                                                    fileref.setAttribute("rel", "stylesheet")
+                                                                    fileref.setAttribute("type", "text/css")
+                                                                    fileref.setAttribute("href", filename)
+                                                                }
+                                                                if (typeof fileref!="undefined")
+                                                                    document.getElementsByTagName("head")[0].appendChild(fileref)
+                                                                    console.log("Importing stuff");
+                                                              }
+
+                                                              loadjscssfile("https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js", "js");
+                                                              loadjscssfile("https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js", "js");
+                                                              loadjscssfile("https://unpkg.com/konva@7.2.5/konva.min.js", "js");
+
+                                                              loadjscssfile("https://julianBeaulieu.com/QBlocks/css/style.css", "css");
+                                                              loadjscssfile("https://julianBeaulieu.com/QBlocks/css/button.css", "css");
+                                                              loadjscssfile("https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css", "css");
+                                                              loadjscssfile("https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,latin-ext", "css");
+                                                              loadjscssfile("https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&subset=latin,latin-ext", "css");
+                                                            </script>
 
                                                             <div class="expand-child-marginally-past-parent"><!-- To make child exceed parent, add  'expand-child-past-parent' to class-->
                                                               <div class="container-flex">
@@ -825,15 +837,15 @@
 
 
                                                             <!-- Script Imports -->
-                                                            <script src="js/GatesAndParticles/Ball.js"></script>
-                                                            <script src="js/GatesAndParticles/Not.js"></script>
-                                                            <script src="js/GatesAndParticles/CNot.js"></script>
-                                                            <script src="js/GatesAndParticles/Swap.js"></script>
-
-
-                                                            <script src="js/build.js"></script>
-                                                            <script src="js/simulate.js"></script>
-                                                            <script src="js/buttons.js"></script>
+                                                            <script src="https://julianBeaulieu.com/QBlocks/js/GatesAndParticles/Ball.js"></script>
+                                                            <script src="https://julianBeaulieu.com/QBlocks/js/GatesAndParticles/Not.js"></script>
+                                                            <script src="https://julianBeaulieu.com/QBlocks/js/GatesAndParticles/CNot.js"></script>
+                                                            <script src="https://julianBeaulieu.com/QBlocks/js/GatesAndParticles/Swap.js"></script>
+                                                            <script src="https://julianBeaulieu.com/QBlocks/js/GatesAndParticles/CSwap.js"></script>
+                                                            <script src="https://julianBeaulieu.com/QBlocks/js/GatesAndParticles/Pete.js"></script>
+                                                            <script src="https://julianBeaulieu.com/QBlocks/js/GatesAndParticles/Mist.js"></script>
+                                                            <script src="https://julianBeaulieu.com/QBlocks/js/build.js"></script>
+                                                            <script src="https://julianBeaulieu.com/QBlocks/js/buttons.js"></script>
 
 
 

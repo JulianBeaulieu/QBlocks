@@ -18,7 +18,7 @@ function newBall(x, y, radius, layer, stage, color, createdBy) {
     x: x,
     y: y,
     shapeType: 'shadowCircle',
-    ballType: color+'Ball',
+    type: color+'Ball',
     id: createdBy,
     radius: blockSnapSize * radius,
     fill: '#FF7B17',
@@ -36,7 +36,7 @@ function newBall(x, y, radius, layer, stage, color, createdBy) {
     x_prev: x,
     y_prev: y,
     shapeType: 'circle',
-    ballType: color+'Ball',
+    type: color+'Ball',
     id: createdBy,
     radius: blockSnapSize * radius,
     fill: color,
@@ -89,13 +89,13 @@ function newBall(x, y, radius, layer, stage, color, createdBy) {
 /*####################### Gate Definition ####################################*/
 /*############################################################################*/
 
-function newGate(x, y, width, height, layer, stage, filepath, gateType, createdBy) {
+function newGate(x, y, width, height, layer, stage, filepath, type, createdBy) {
 
   var shadowRectangle = new Konva.Rect({
     x: x,
     y: y,
     shapeType: 'shadowRectangle',
-    gateType: gateType+'Gate',
+    type: type,
     id: createdBy,
     width: blockSnapSize * width,
     height: blockSnapSize * height,
@@ -115,7 +115,7 @@ function newGate(x, y, width, height, layer, stage, filepath, gateType, createdB
       x_prev: x,
       y_prev: y,
       shapeType: 'rectangle',
-      gateType: gateType+'Gate',
+      type: type,
       id: createdBy,
       width: blockSnapSize * width,
       height: blockSnapSize * height,
@@ -283,8 +283,8 @@ layer.on('dragmove', function (e) {
     else if (haveIntersection(shape, target)) {
       newX = calcNewX(shape, target)
       newY = calcNewY(shape, target)
-      console.log("X: ", newX);
-      console.log("Y: ", newY);
+      // console.log("X: ", newX);
+      // console.log("Y: ", newY);
       target.position({
         x: newX,
         y: newY
@@ -298,22 +298,7 @@ layer.on('dragmove', function (e) {
 /*####################### Simulation Code ####################################*/
 /*############################################################################*/
 
-function getShapes() {
-  // select shapes by name
-  var gates = stage.find('Image');
-  var balls = stage.find('Circle')
-
-  console.log("Gates:");
-  gates.each(function (gate) {
-    console.log(gate.attrs);
-  });
-  console.log("Balls:");
-  balls.each(function (ball) {
-    console.log(ball.attrs);
-  });
-};
-
-function clearShapes() {
+function clearShapesCreatedDuringSimulation() {
   // select shapes by name
   var objects = stage.find('#simulation');
 
@@ -337,4 +322,301 @@ function clearAllObjects(){
   });
 
   layer.draw();
+};
+
+function getShapes() {
+  let shapes = ["Image", "Circle"]
+  var gates = []
+  var particles = []
+
+  shapes.forEach((shape, i) => {
+    var shapeInStage = stage.find(shape);
+    shapeInStage.each(function (object) {
+      if(!object.attrs.shapeType.toLowerCase().includes("shadow")){
+        if(object.attrs.shapeType.toLowerCase().includes("circle") ||
+            object.attrs.shapeType.toLowerCase().includes("mist")){
+              particles.push(object);
+            } else {
+              gates.push(object);
+            }
+      }
+    });
+  });
+
+  // console.log("Length of gates array: " + gates.length);
+  // gates.forEach((shape, i) => {
+  //   console.log(shape.attrs);
+  // });
+  //
+  // console.log("Length of particles array: " + particles.length);
+  // particles.forEach((shape, i) => {
+  //   console.log(shape.attrs);
+  // });
+
+  var matchedObjects = findAbove(gates, particles);
+  // console.log("findAbove");
+  // console.log("Length of matchedObjects array: " + matchedObjects.length);
+  // matchedObjects.forEach((shape, i) => {
+  //   console.log(shape);
+  // });
+
+  matchedObjects = removeSingleObjects(matchedObjects);
+
+  matchedObjects = shapesToObject(matchedObjects);
+  // console.log("shapesToObject");
+  // console.log("Length of matchedObjects array: " + matchedObjects.length);
+  // matchedObjects.forEach((shape, i) => {
+  //   console.log(shape);
+  // });
+
+  let simulationOutcome = simulate(matchedObjects);
+  // console.log("simulate");
+
+  clearShapesCreatedDuringSimulation();
+
+  // console.log("Length of simulationOutcome array: " + simulationOutcome.length);
+  // simulationOutcome.forEach((shape, i) => {
+  //   console.log(shape.toString());
+  // });
+
+  drawObjects(simulationOutcome);
+};
+
+function findAbove(gates, particles) {
+  var particles = particles;
+  var matchedObjects = [];
+
+  gates.forEach((gate, i) => {
+    console.log("Gate: " + gate.attrs.type.toLowerCase());
+    if(gate.attrs.type.toLowerCase().includes("cswap")){
+      let temp = matchTrippleGate(gate, particles);
+      particles = temp[1];
+      matchedObjects.push(temp[0]);
+    } else if(gate.attrs.type.toLowerCase().includes("cnot") ||
+        gate.attrs.type.toLowerCase().includes("swap")){
+      let temp = matchDoubleGate(gate, particles);
+      particles = temp[1];
+      matchedObjects.push(temp[0]);
+    } else if(gate.attrs.type.toLowerCase().includes("not") ||
+        gate.attrs.type.toLowerCase().includes("pete")){
+      let temp = matchSingleGate(gate, particles);
+      particles = temp[1];
+      matchedObjects.push(temp[0]);
+    } else {
+      console.log("Something went wrong while matching gates and particles");
+    }
+  });
+
+  return matchedObjects;
+};
+
+function matchSingleGate(gate, particles) {
+  console.log("matchSingleGate");
+  let x1 = gate.attrs.x;
+  let x2 = gate.attrs.x + gate.attrs.width;
+  let y1 = gate.attrs.y;
+  let y2 = gate.attrs.y + gate.attrs.height;
+
+  var particles = particles;
+  var matchedObjects = [gate];
+
+  particles.forEach((particle, i) => {
+    let x = particle.attrs.x;
+    let y = particle.attrs.y;
+
+    if((x1 <= x <= x2) && (y1 <= y <= y2)){
+      matchedObjects.push(particle);
+      particles.splice(i, 1);
+      return [matchedObjects, particles];
+    }
+  });
+
+  return [matchedObjects, particles];
+}
+
+function matchDoubleGate(gate, particles) {
+  console.log("matchDoubleGate");
+  let x1 = gate.attrs.x;
+  let x2 = gate.attrs.x + gate.attrs.width/2;
+  let x3 = gate.attrs.x + gate.attrs.width;
+  let y1 = gate.attrs.y;
+  let y2 = gate.attrs.y + gate.attrs.height;
+
+  var particles = particles;
+  var matchedObjects = [gate];
+
+  for (var i = 0; i < particles.length; i++) {
+    let particle = particles[i];
+    let x = particle.attrs.x;
+    let y = particle.attrs.y;
+
+    if((x1 <= x <= x2) && (y1 <= y <= y2)){
+      matchedObjects.push(particle);
+      particles.splice(i, 1);
+      break;
+    }
+  }
+
+  for (var i = 0; i < particles.length; i++) {
+    let particle = particles[i];
+    let x = particle.attrs.x;
+    let y = particle.attrs.y;
+
+    if((x2 <= x <= x3) && (y1 <= y <= y2)){
+      matchedObjects.push(particle);
+      particles.splice(i, 1);
+      return [matchedObjects, particles];
+    }
+  }
+
+  return [matchedObjects, particles];
+}
+
+function matchTrippleGate(gate, particles) {
+  console.log("matchTrippleGate");
+  let x1 = gate.attrs.x;
+  let x2 = gate.attrs.x + gate.attrs.width/3;
+  let x3 = gate.attrs.x + (gate.attrs.width*2) /3;
+  let x4 = gate.attrs.x + gate.attrs.width;
+  let y1 = gate.attrs.y;
+  let y2 = gate.attrs.y + gate.attrs.height;
+
+  var x = 0;
+  var y = 0;
+
+  var particles = particles;
+  var matchedObjects = [gate];
+
+  for (var i = 0; i < particles.length; i++) {
+    particle = particles[i];
+    x = particle.attrs.x;
+    y = particle.attrs.y;
+
+    if((x1 <= x <= x2) && (y1 <= y <= y2)){
+      matchedObjects.push(particle);
+      console.log(particle.attrs.type);
+      particles.splice(i, 1);
+      break;
+    }
+  }
+
+  for (var i = 0; i < particles.length; i++) {
+    particle = particles[i];
+    x = particle.attrs.x;
+    y = particle.attrs.y;
+
+    if((x2 <= x <= x3) && (y1 <= y <= y2)){
+      matchedObjects.push(particle);
+      console.log(particle.attrs.type);
+      particles.splice(i, 1);
+      break;
+    }
+  }
+
+  for (var i = 0; i < particles.length; i++) {
+    particle = particles[i];
+    x = particle.attrs.x;
+    y = particle.attrs.y;
+
+    if((x3 <= x <= x4) && (y1 <= y <= y2)){
+      matchedObjects.push(particle);
+      console.log(particle.attrs.type);
+      particles.splice(i, 1);
+      return [matchedObjects, particles];
+    }
+  }
+
+  return [matchedObjects, particles];
+}
+
+function removeSingleObjects(objects) {
+  var convertedObjects = [];
+
+  for (var i = 0; i < objects.length; i++) {
+    let matchedObjects = objects[i];
+
+    if(matchedObjects.length > 1){
+      convertedObjects.push(matchedObjects);
+    }
+  }
+
+  return convertedObjects;
+};
+
+function shapesToObject(objects) {
+  var convertedObjects = [];
+
+  for (var i = 0; i < objects.length; i++) {
+    let matchedObjects = objects[i];
+    var newObjectsList = [];
+
+    matchedObjects.forEach((shape, i) => {
+      newObjectsList.push(createObject(shape));
+    });
+
+    convertedObjects.push(newObjectsList);
+  }
+
+  return convertedObjects;
+};
+
+function createObject(object) {
+  if(object.attrs.type.toLowerCase().includes("cswap")){
+    return new CSwap(object.attrs.x, object.attrs.y, object.attrs.width, object.attrs.height);
+  } else if(object.attrs.type.toLowerCase().includes("cnot")){
+    return new CNot(object.attrs.x, object.attrs.y, object.attrs.width, object.attrs.height);
+  } else if(object.attrs.type.toLowerCase().includes("swap")){
+    return new Swap(object.attrs.x, object.attrs.y, object.attrs.width, object.attrs.height);
+  } else if(object.attrs.type.toLowerCase().includes("not")){
+    return new Not(object.attrs.x, object.attrs.y, object.attrs.width, object.attrs.height);
+  } else if(object.attrs.type.toLowerCase().includes("pete")){
+    return new Pete(object.attrs.x, object.attrs.y, object.attrs.width, object.attrs.height);
+  } else if(object.attrs.type.toLowerCase().includes("black")){
+    return new Ball(0, '+', object.attrs.x, object.attrs.y, object.attrs.radius);
+  } else if(object.attrs.type.toLowerCase().includes("white")){
+    return new Ball(1, '+', object.attrs.x, object.attrs.y, object.attrs.radius);
+  } else if(object.attrs.type.toLowerCase().includes("wb")){
+    return new Mist(1, '+', 0, '+', object.attrs.x, object.attrs.y, object.attrs.width, object.attrs.height);
+  } else if(object.attrs.type.toLowerCase().includes("w-b")){
+    return new Mist(1, '+', 0, '1', object.attrs.x, object.attrs.y, object.attrs.width, object.attrs.height);
+  } else {
+    console.log("Something went wrong while creating the objects");
+    return null;
+  }
+}
+
+function drawObjects(objects){
+  objects.forEach((object, i) => {
+    if(object.constructor.name.toLowerCase() === 'ball'){
+      newBall(object.x, object.y, 0.5, layer, stage, ((object.color === 1) ? 'white' : 'black'), 'simulation');
+    } else if(object.constructor.name.toLowerCase() === 'mist'){
+      if(object.colorLeft === 1 && object.colorRight === 0 && object.signLeft === '+' && object.signRight === '+'){
+        newGate(object.x, object.y, 4, 2, layer, stage, 'img/wb.png', 'wbMist', 'simulation');
+      } else {
+        newGate(object.x, object.y, 4, 2, layer, stage, 'img/wnegb.png', 'w-bMist', 'simulation');
+      }
+    } else {
+      console.log("Something went wrong: " + object.toString());
+      return null;
+    }
+    stage.add(layer);
+  });
+};
+
+function simulate(matchedObjects){
+  var newObjects = [];
+
+  for (var i = 0; i < matchedObjects.length; i++) {
+    let particles = matchedObjects[i];
+    let gate = particles[0];
+    particles.splice(0, 1);
+
+    let elementList = gate.run(particles);
+
+    elementList.forEach((item, i) => {
+      newObjects.push(item);
+    });
+  }
+
+  return newObjects;
 }

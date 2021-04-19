@@ -1,25 +1,25 @@
 function createPETE_Gate(){
-  newGate(blockSnapSize * 3, blockSnapSize * 3, 2, 2, layer, stage, 'img/hadamard.png', 'hadamard', 'user');
+  newGate(blockSnapSize * 3, blockSnapSize * 3, 2, 2, layer, stage, 'img/pete.png', 'peteGate', 'user');
   stage.add(layer);
 }
 
 function createSWAP_Gate(){
-  newGate(blockSnapSize * 3, blockSnapSize * 3, 4, 2, layer, stage, 'img/swap.png', 'swap', 'user');
+  newGate(blockSnapSize * 3, blockSnapSize * 3, 4, 2, layer, stage, 'img/swap.png', 'swapGate', 'user');
   stage.add(layer);
 }
 
 function createCSWAP_Gate(){
-  newGate(blockSnapSize * 3, blockSnapSize * 3, 6, 2, layer, stage, 'img/cswap.png', 'cswap', 'user');
+  newGate(blockSnapSize * 3, blockSnapSize * 3, 6, 2, layer, stage, 'img/cswap.png', 'cswapGate', 'user');
   stage.add(layer);
 }
 
 function createCNOT_Gate(){
-  newGate(blockSnapSize * 3, blockSnapSize * 3, 4, 2, layer, stage, 'img/cnot.png', 'cnot', 'user');
+  newGate(blockSnapSize * 3, blockSnapSize * 3, 4, 2, layer, stage, 'img/cnot.png', 'cnotGate', 'user');
   stage.add(layer);
 }
 
 function createNOT_Gate(){
-  newGate(blockSnapSize * 3, blockSnapSize * 3, 2, 2, layer, stage, 'img/not.png', 'not', 'user');
+  newGate(blockSnapSize * 3, blockSnapSize * 3, 2, 2, layer, stage, 'img/not.png', 'notGate', 'user');
   stage.add(layer);
 }
 
@@ -34,12 +34,12 @@ function createWHITE_BALL(){
 }
 
 function createWBMist(){
-  newGate(blockSnapSize * 3, blockSnapSize * 3, 4, 2, layer, stage, 'img/wb.png', 'wb', 'user');
+  newGate(blockSnapSize * 3, blockSnapSize * 3, 4, 2, layer, stage, 'img/wb.png', 'wbMist', 'user');
   stage.add(layer);
 }
 
 function createWNegBMist(){
-  newGate(blockSnapSize * 3, blockSnapSize * 3, 4, 2, layer, stage, 'img/wnegb.png', 'w-b', 'user');
+  newGate(blockSnapSize * 3, blockSnapSize * 3, 4, 2, layer, stage, 'img/wnegb.png', 'w-bMist', 'user');
   stage.add(layer);
 }
 
@@ -47,12 +47,11 @@ function createWNegBMist(){
 function start(){
   console.log("Starting simulations");
   getShapes();
-  simulate();
 }
 
 function stop(){
   console.log("Clearing simulation objects");
-  clearShapes();
+  clearShapesCreatedDuringSimulation();
 }
 
 function clearAll(){
