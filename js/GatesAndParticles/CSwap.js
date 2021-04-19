@@ -9,9 +9,9 @@ function CSwap(x, y, width, height){
     let object2 = objectList[1];
     let object3 = objectList[2];
 
-    console.log("object1: " + object1.color);
-    console.log("object2: " + object2.color);
-    console.log("object3: " + object3.color);
+    console.log("object1: " + ((object1.color === 1) ? 'White' : 'Black'));
+    console.log("object2: " + ((object2.color === 1) ? 'White' : 'Black'));
+    console.log("object3: " + ((object3.color === 1) ? 'White' : 'Black'));
 
     if(object1.constructor.name === 'Ball'){
       //Not first object if second object is white
@@ -20,12 +20,14 @@ function CSwap(x, y, width, height){
       object3.y += 2 * this.height;
 
       if(object1.color === 1){
-        tmp = object2.x ;
+        console.log("CSwap IF");
+        tmp = object2.x;
         object2.x = object3.x;
         object3.x = tmp;
 
         return [object1, object3, object2];
       } else { //don't Not first object
+        console.log("CSwap ELSE");
         return [object1, object2, object3];
       }
     } else if(object1.constructor.name === 'Mist'){

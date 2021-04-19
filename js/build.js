@@ -174,8 +174,6 @@ function newGate(x, y, width, height, layer, stage, filepath, type, createdBy) {
 /*####################### Creates Grid #######################################*/
 /*############################################################################*/
 
-
-
 var stage = new Konva.Stage({
   container: 'canvas',
   width: width,
@@ -184,7 +182,6 @@ var stage = new Konva.Stage({
 
 var gridLayer = new Konva.Layer();
 var padding = blockSnapSize;
-console.log(width, padding, width / padding);
 
 for (var i = 0; i < width / padding; i++) {
   gridLayer.add(new Konva.Line({
@@ -354,24 +351,29 @@ function getShapes() {
   // });
 
   var matchedObjects = findAbove(gates, particles);
-  // console.log("findAbove");
-  // console.log("Length of matchedObjects array: " + matchedObjects.length);
-  // matchedObjects.forEach((shape, i) => {
-  //   console.log(shape);
-  // });
+  console.log("findAbove");
+  console.log("0 Length of matchedObjects array: " + matchedObjects.length);
+  matchedObjects.forEach((shape, i) => {
+    console.log(shape);
+  });
 
   matchedObjects = removeSingleObjects(matchedObjects);
 
   matchedObjects = shapesToObject(matchedObjects);
   // console.log("shapesToObject");
 
-  console.log("Length of matchedObjects array: " + matchedObjects.length);
+  console.log("1 Length of matchedObjects array: " + matchedObjects.length);
   matchedObjects.forEach((shape, i) => {
-    console.log(2+" " + i + " | " + shape);
+    console.log(i + " | " + shape);
   });
 
   let simulationOutcome = simulate(matchedObjects);
   // console.log("simulate");
+
+  console.log("2 Length of matchedObjects array: " + simulationOutcome.length);
+  simulationOutcome.forEach((shape, i) => {
+    console.log(i + " | " + shape);
+  });
 
   clearShapesCreatedDuringSimulation();
 
@@ -463,7 +465,7 @@ function matchDoubleGate(gate, particles) {
     let x = particle.attrs.x;
     let y = particle.attrs.y;
 
-    if((x2 <= x <= x3) && (y1 <= y <= y2)){
+    if((x2 < x <= x3) && (y1 <= y <= y2)){
       matchedObjects.push(particle);
       particles.splice(i, 1);
       return [matchedObjects, particles];
@@ -506,7 +508,7 @@ function matchTrippleGate(gate, particles) {
     x = particle.attrs.x;
     y = particle.attrs.y;
 
-    if((x2 <= x <= x3) && (y1 <= y <= y2)){
+    if((x2 < x <= x3) && (y1 <= y <= y2)){
       matchedObjects.push(particle);
       console.log(particle.attrs.type);
       particles.splice(i, 1);
@@ -519,7 +521,7 @@ function matchTrippleGate(gate, particles) {
     x = particle.attrs.x;
     y = particle.attrs.y;
 
-    if((x3 <= x <= x4) && (y1 <= y <= y2)){
+    if((x3 < x <= x4) && (y1 <= y <= y2)){
       matchedObjects.push(particle);
       console.log(particle.attrs.type);
       particles.splice(i, 1);
@@ -610,7 +612,7 @@ function simulate(matchedObjects){
   for (var i = 0; i < matchedObjects.length; i++) {
     let particles = matchedObjects[i];
     let gate = particles[0];
-    particles.splice(0, 1);
+    particles.shift();
 
     let elementList = gate.run(particles);
 
