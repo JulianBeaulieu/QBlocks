@@ -20,12 +20,14 @@ function CSwap(x, y, width, height){
       object3.y += 2 * this.height;
 
       if(object1.color === 1){
+        console.log("CSwap IF");
         tmp = object2.x;
         object2.x = object3.x;
         object3.x = tmp;
 
         return [object1, object3, object2];
       } else { //don't Not first object
+        console.log("CSwap ELSE");
         return [object1, object2, object3];
       }
     } else if(object1.constructor.name === 'Mist'){
